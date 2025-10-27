@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Политика конфиденциальности — {{ site_settings.site_name.upper }}{% endblock %}
+{% block description %}Политика конфиденциальности {{ site_settings.site_name.upper }}: как мы собираем, используем и защищаем ваши персональные данные при использовании сайта и услуг детейлинг-салона.{% endblock %}
+{% block keywords %}политика конфиденциальности, защита данных, персональные данные, {{ site_settings.site_name.upper }}{% endblock %}
+
 
 {% block content %}
 <section class="page-header">

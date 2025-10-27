@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}О салоне {{ site_settings.site_name.upper }} — профессиональный детейлинг в Москве{% endblock %}
+{% block description %}{{ site_settings.site_name.upper }} — ателье премиум-класса для комплексного ухода за автомобилем. Внешний и внутренний детейлинг, индивидуальный подход, выездной сервис и безупречное качество.{% endblock %}
+{% block keywords %}детейлинг салон, профессиональный детейлинг, уход за автомобилем, химчистка салона, полировка кузова, защитные покрытия, выездной детейлинг, {{ site_settings.site_name.upper }}{% endblock %}
+
 {% block content %}
 <section class="page-header">
             <div class="container text-center">
@@ -46,7 +50,7 @@
                         <label>Телефон *</label>
                         <input type="tel" name="phone" required>
                     </div>
-                        <div class="form-group">
+                        <div class="form-group captcha">
                             {{ callback_form.captcha.label_tag }}
                             {{ callback_form.captcha }}
                             {% if callback_form.captcha.errors %}
@@ -76,27 +80,53 @@
         </section>
 {% endblock %}
 
+{% block extra_css %}
+<style>
+    .captcha {
+    margin-top: 10px;
+        width: 300px;
+        height: auto;
+}
+
+.captcha img {
+    border: 1px solid #ccc;
+    padding: 5px;
+    background-color: #fff;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.captcha input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+</style>
+{% endblock %}
+
 {% block extra_js %}
 <script>
     document.getElementById('callback-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target); // ← включает все поля + CSRF + капчу
+        e.preventDefault();
+        const formData = new FormData(e.target);
 
-    try {
-        const response = await fetch("{% url 'submit_callback' %}", {
-            method: 'POST',
-            body: formData,
-        });
-        const result = await response.json();
-        if (result.success) {
-            alert('✅ Спасибо! Мы перезвоним вам в ближайшее время.);
-            e.target.reset();
-        } else {
-            alert('❌ Ошибка: ' + JSON.stringify(result.errors));
+        try {
+            const response = await fetch("{% url 'submit_callback' %}", {
+                method: 'POST',
+                body: formData,
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert('✅ Спасибо! Мы перезвоним вам в ближайшее время.');
+                e.target.reset();
+            } else {
+                alert('❌ Ошибка: ' + JSON.stringify(result.errors));
+            }
+        } catch (err) {
+            alert('⚠️ Не удалось отправить заявку. Проверьте интернет-соединение.');
         }
-    } catch (err) {
-        alert('⚠️ Не удалось отправить заявку. Проверьте интернет-соединение.');
-    }
-});
+    });
 </script>
 {% endblock %}

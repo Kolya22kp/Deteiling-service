@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}{{ site_settings.site_name.upper }} — премиум-детейлинг автомобилей в Москве{% endblock %}
+{% block description %}{{ site_settings.site_name.upper }} — ателье полного цикла для ухода за автомобилем: внешний и внутренний детейлинг, оклейка пленкой, керамические покрытия, индивидуальные программы. Запишитесь на консультацию уже сегодня.{% endblock %}
+{% block keywords %}детейлинг авто, премиум детейлинг, уход за автомобилем, полировка кузова, химчистка салона, оклейка пленкой, керамика на авто, {{ site_settings.site_name.upper }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/hero_gallery.css' %}">
+{% endblock %}
+
 {% block content %}
 
     <section class="hero" style="background-image: linear-gradient(rgba(10,10,10,0.6), rgba(10,10,10,0.6)), url(https://yandex-images.clstorage.net/51DFco214/4a6cdbqJU8l/VVg2nxGPfnDUeq4d7Nf_fV74pZ0_7zeeokt58XGIlYadV_8W-g8GotSVjzk2vTC8ZQeJJDxdi-Z3XalhKqNZdMHLIw2GHr5xkWhsjupU-3gN__VYb2l2n3QIef4qgAiPR8mmyWYFmLEV1pr4MTsgrH6eTOQqlQProkvj7LN1Qi6Z0DXWHp_2sJUvLRmp1n62DfGmU2Dkod4lFK20bw7MzckM4oNqT5I6HFmW-7fjLyUw0NUuoFJMIacFL-P49sIqENAzkh5fdjQWIegWLJc0PsW6Zh1gKawVINKuMiUDCcyMSGFGZgLZcVfVl3w_aG5jOpNcIaUZhm9sjOvievxN6RhcsNaQXLE1UusgkGnU_v4Ec6wSpezlESZRbfDvQI6KBcRsQKTPFnVeldC9-aQtIrmc3u8tHwCrI8nsYvs6hyVc3rxSnRE2ONJtqJVhWH02BnKgmSBn5hRqlOO3pw5JD0SEaEnuzNV11pQa__TmqWR0GlVp4B3AbihPpaO6fIJoUdA00BZQ9bSboekWblr2u4A3Z5TlJOlaolBncKcMwU1ARmqNKs2SNxCenXG36yzkeJSeaqxUgKZnS23quHvBJFAbvdfV3f4wWaUlV-ucu3oGOG3ab2Nm3SKUr7wnQUJOgQbgjypKmbOZHNh5u6lk6nObEmSqUQBh7wpt6Pg1TOtRnXaVFRb3d5kr7JHumjA9Dn-mXSplotDnlez7JMkADczGYsfkRJb9XVVRPL1hIar42JdkLxcIpqTE4ig9PM4i2FWyH9tavPjZ6CCbJB_wdU9wJ12vbauZbVApuOAABUpLjycFrwLSNJjeU3h-o6UoPZXcYeJeyO2hRaghvfxM4hCbP57V3LBxmOClnyrb9X_Gd-9V5qNl1-gZ77tjygJOSEumSW1CUruekdO1Nath6vcd2ugknEqr44Ntobe0gWPQmP9Q2Rg8ON4ppdPiGrA6hvZhm6ek4dimlia6rc); background-size: cover; background-position: center;">
@@ -72,8 +80,8 @@
                             </a>
                         </div>
                     </div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+<!--                    <div class="swiper-button-prev"></div>-->
+<!--                    <div class="swiper-button-next"></div>-->
                 </div>
 
                 <div class="text-center animate-on-scroll" style="margin-top: 60px;"><a href="{% url 'gallery' %}" class="btn btn-secondary">Смотреть все проекты</a></div>
@@ -84,4 +92,5 @@
 
 {% block extra_js %}
 <script src="{% static 'js/main-page-slider.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 {% endblock %}

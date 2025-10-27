@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Услуги {{ site_settings.site_name.upper }} — полный спектр профессионального детейлинга{% endblock %}
+{% block description %}Профессиональные услуги детейлинга в Москве: восстановление ЛКП, керамические покрытия, химчистка салона, озонирование, оклейка антигравийной пленкой и индивидуальные программы ухода за автомобилем.{% endblock %}
+{% block keywords %}услуги детейлинга, внешний детейлинг, внутренний детейлинг, химчистка салона, полировка авто, керамическое покрытие, антигравийная пленка, индивидуальный уход за авто, {{ site_settings.site_name.upper }}{% endblock %}
+
 {% block content %}
 <section class="page-header">
             <div class="container text-center">

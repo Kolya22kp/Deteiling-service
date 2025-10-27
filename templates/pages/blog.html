@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Блог {{ site_settings.site_name.upper }} — советы по профессиональному уходу за автомобилем{% endblock %}
+{% block description %}Образовательные статьи о внешнем и внутреннем детейлинге: как выбрать пленку, ухаживать за кожей салона, наносить керамику и продлить жизнь лакокрасочному покрытию.{% endblock %}
+{% block keywords %}блог о детейлинге, уход за автомобилем, керамическое покрытие, химчистка салона, полировка авто, защита ЛКП, советы по детейлинге, {{ site_settings.site_name.upper }}{% endblock %}
+
 {% block content %}
     <section class="page-header">
         <div class="container text-center">
@@ -11,67 +15,23 @@
 
     <section class="blog-section">
         <div class="container">
-            <div id="articles-list" class="articles-list">
-            {% for article in articles %}
-              <article class="article-card animate-on-scroll" data-article="article-{{ article.pk }}">
-                <div class="article-card__image">
-                  <img src="{{ article.image_url }}" alt="{{ article.title }}">
-                </div>
-                <div class="article-card__content">
-                  <h3>{{ article.title }}</h3>
-                  <p class="article-meta">{{ article.reading_time_minutes }} минут чтения • {{ article.published_at|date:"j F Y" }}</p>
-                  <p>{{ article.short_description }}</p>
-                  <button class="btn btn-secondary read-article-btn" data-target="article-{{ article.pk }}">Читать статью →</button>
-                </div>
-              </article>
-            {% endfor %}
-          </div>
-
-          {% for article in articles %}
-            <div id="article-{{ article.pk }}" class="article-content" style="display: none;">
-              <button class="btn btn-secondary back-to-list">← Назад к списку статей</button>
-              <h2>{{ article.title }}</h2>
-              <p class="article-meta">{{ article.reading_time_minutes }} минут чтения • {{ article.published_at|date:"j F Y" }}</p>
-              <img src="{{ article.hero_image_url }}" alt="{{ article.title }}" class="article-hero-image">
-
-              {{ article.content|safe }}
-
-              <button class="btn btn-primary" style="margin-top: 40px;">Записаться на услугу</button>
+            <div class="articles-list">
+                {% for article in articles %}
+                    <article class="article-card animate-on-scroll">
+                        <div class="article-card__image">
+                            <img src="{{ article.image_url }}" alt="{{ article.title }}">
+                        </div>
+                        <div class="article-card__content">
+                            <h3>{{ article.title }}</h3>
+                            <p class="article-meta">{{ article.reading_time_minutes }} минут чтения • {{ article.published_at|date:"j F Y" }}</p>
+                            <p>{{ article.short_description }}</p>
+                            <a href="{{ article.get_absolute_url }}" class="btn btn-secondary">Читать статью →</a>
+                        </div>
+                    </article>
+                {% empty %}
+                    <p>Статьи пока не опубликованы.</p>
+                {% endfor %}
             </div>
-          {% endfor %}
-
         </div>
     </section>
-{% endblock %}
-
-{% block extra_js %}
-<script src="{% static 'js/blog.js' %}"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const articlesList = document.getElementById('articles-list');
-    const readButtons = document.querySelectorAll('.read-article-btn');
-    const backButtons = document.querySelectorAll('.back-to-list');
-
-    readButtons.forEach(button => {
-      button.addEventListener('click', function () {
-        const targetId = this.getAttribute('data-target');
-        const targetArticle = document.getElementById(targetId);
-
-        if (articlesList && targetArticle) {
-          articlesList.style.display = 'none';
-          targetArticle.style.display = 'block';
-        }
-      });
-    });
-
-    backButtons.forEach(button => {
-      button.addEventListener('click', function () {
-        document.querySelectorAll('.article-content').forEach(el => {
-          el.style.display = 'none';
-        });
-        articlesList.style.display = 'block';
-      });
-    });
-  });
-</script>
 {% endblock %}

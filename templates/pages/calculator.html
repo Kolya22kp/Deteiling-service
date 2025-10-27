@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Калькулятор оклейки — {{ site_settings.site_name.upper }}{% endblock %}
+{% block title %}Калькулятор оклейки авто — точный расчёт стоимости в {{ site_settings.site_name.upper }}{% endblock %}
+{% block description %}Онлайн-калькулятор оклейки автомобиля в {{ site_settings.site_name.upper }}: рассчитайте стоимость виниловой, матовой или защитной пленки с учетом модели авто и дополнительных услуг.{% endblock %}
+{% block keywords %}калькулятор оклейки авто, цена оклейки пленкой, виниловая пленка, антигравийная защита, матовая пленка, оклейка автомобиля, {{ site_settings.site_name.upper }}{% endblock %}
 
 {% block content %}
 <section class="page-header">
@@ -97,7 +99,7 @@
                         <label>Комментарий</label>
                         <textarea name="comment" rows="3"></textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group captcha">
                         {{ booking_form.captcha.label_tag }}
                         {{ booking_form.captcha }}
                         {% if booking_form.captcha.errors %}
@@ -120,6 +122,32 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .captcha {
+    margin-top: 10px;
+        width: 300px;
+        height: auto;
+}
+
+.captcha img {
+    border: 1px solid #ccc;
+    padding: 5px;
+    background-color: #fff;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.captcha input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+</style>
 {% endblock %}
 
 {% block extra_js %}

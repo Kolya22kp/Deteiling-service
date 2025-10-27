@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Галерея работ {{ site_settings.site_name.upper }} — до и после детейлинга автомобилей{% endblock %}
+{% block description %}Фото и видео наших работ: полировка, керамика, химчистка салона, оклейка пленкой. Реальные примеры преображения автомобилей Mercedes, Porsche, Lamborghini и других марок.{% endblock %}
+{% block keywords %}галерея детейлинга, фото до и после, полировка кузова, химчистка салона, оклейка пленкой, керамическое покрытие, {{ site_settings.site_name.upper }}{% endblock %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="https://unpkg.com/img-comparison-slider@8/dist/style.css" />
 {% endblock %}
