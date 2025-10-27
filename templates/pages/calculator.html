@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Калькулятор оклейки — {{ site_settings.site_name.upper }}{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container text-center">
+        <h1 class="animate-on-load">Калькулятор стоимости оклейки</h1>
+        <p class="animate-on-load delay-1">Получите точный расчёт за 2 минуты. Все цены — прозрачны.</p>
+    </div>
+</section>
+
+<section class="calculator-section">
+    <div class="container">
+        <div id="calculator-app" class="calculator-app">
+
+            <div id="calculator-step" class="step active" >
+                <div class="calculator-step">
+                    <h3>1. Тип транспортного средства</h3>
+                    <select id="vehicle-type" class="custom-select">
+                        <option value="">— Выберите тип —</option>
+                        {% for vt in vehicle_types %}
+                            <option value="{{ vt.id }}" data-multiplier="{{ vt.base_multiplier }}">
+                                {{ vt.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="calculator-step">
+                    <h3>2. Выберите детали для оклейки</h3>
+                    <div id="parts-container"></div>
+                    <button id="add-part" class="add-part-btn" disabled>+</button>
+                </div>
+
+                <div class="calculator-step">
+                    <h3>3. Тип пленки</h3>
+                    <div class="film-options">
+                        {% for ft in film_types %}
+                            <label class="radio-option">
+                                <input type="radio" name="film" value="{{ ft.id }}"
+                                       data-multiplier="{{ ft.price_multiplier }}"
+                                       {% if forloop.first %}checked{% endif %}>
+                                <span>{{ ft.name }} (×{{ ft.price_multiplier }})</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="calculator-step">
+                    <h3>4. Дополнительные услуги</h3>
+                    <div class="options-list">
+                        {% for opt in additional_options %}
+                            <label class="checkbox-option">
+                                <input type="checkbox" value="{{ opt.id }}"
+                                       data-fixed="{{ opt.price_fixed|default:'null' }}"
+                                       data-percent="{{ opt.price_percent|default:'null' }}"
+                                       data-per-part="{{ opt.applies_to_body_part|yesno:'true,false' }}">
+                                <span>{{ opt.name }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="calculator-step">
+                    <h3>5. Итоговая стоимость</h3>
+                    <div class="total-price">
+                        <span id="total">0</span> ₽
+                    </div>
+                    <button id="submit-btn" class="btn btn-primary">Записаться на оклейку</button>
+                </div>
+            </div>
+
+            <div id="booking-form-step" class="step">
+                <h3>Укажите контактные данные</h3>
+                <form id="booking-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Ваше имя *</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Телефон *</label>
+                        <input type="tel" name="phone">
+
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Желаемая дата и время *</label>
+                        <input type="datetime-local" name="appointment_datetime" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Комментарий</label>
+                        <textarea name="comment" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        {{ booking_form.captcha.label_tag }}
+                        {{ booking_form.captcha }}
+                        {% if booking_form.captcha.errors %}
+                            <div class="error" style="color: #ff6b6b; margin-top: 8px;">
+                                {{ booking_form.captcha.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Отправить заявку</button>
+                    <button type="button" id="back-to-calculator" class="btn btn-secondary">← Назад к расчёту</button>
+                </form>
+            </div>
+
+            <div id="success-step" class="step" style="text-align: center;">
+                <h3>Спасибо за заявку!</h3>
+                <p>Мы свяжемся с вами в ближайшее время для подтверждения записи на оклейку.</p>
+                <a href="/" class="btn btn-secondary">Вернуться на главную</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const GROUPED_PARTS = {{ grouped_parts_json|safe }};
+    const BASE_PRICES = {{ base_prices_json|safe }};
+    const DISCOUNT_TIERS = {{ discount_tiers_json|safe }};
+    const SUBMIT_URL = "{% url 'submit_booking' %}";
+</script>
+<script src="{% static 'js/calculator.js' %}"></script>
+{% endblock %}

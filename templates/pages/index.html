@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <section class="hero" style="background-image: linear-gradient(rgba(10,10,10,0.6), rgba(10,10,10,0.6)), url(https://yandex-images.clstorage.net/51DFco214/4a6cdbqJU8l/VVg2nxGPfnDUeq4d7Nf_fV74pZ0_7zeeokt58XGIlYadV_8W-g8GotSVjzk2vTC8ZQeJJDxdi-Z3XalhKqNZdMHLIw2GHr5xkWhsjupU-3gN__VYb2l2n3QIef4qgAiPR8mmyWYFmLEV1pr4MTsgrH6eTOQqlQProkvj7LN1Qi6Z0DXWHp_2sJUvLRmp1n62DfGmU2Dkod4lFK20bw7MzckM4oNqT5I6HFmW-7fjLyUw0NUuoFJMIacFL-P49sIqENAzkh5fdjQWIegWLJc0PsW6Zh1gKawVINKuMiUDCcyMSGFGZgLZcVfVl3w_aG5jOpNcIaUZhm9sjOvievxN6RhcsNaQXLE1UusgkGnU_v4Ec6wSpezlESZRbfDvQI6KBcRsQKTPFnVeldC9-aQtIrmc3u8tHwCrI8nsYvs6hyVc3rxSnRE2ONJtqJVhWH02BnKgmSBn5hRqlOO3pw5JD0SEaEnuzNV11pQa__TmqWR0GlVp4B3AbihPpaO6fIJoUdA00BZQ9bSboekWblr2u4A3Z5TlJOlaolBncKcMwU1ARmqNKs2SNxCenXG36yzkeJSeaqxUgKZnS23quHvBJFAbvdfV3f4wWaUlV-ucu3oGOG3ab2Nm3SKUr7wnQUJOgQbgjypKmbOZHNh5u6lk6nObEmSqUQBh7wpt6Pg1TOtRnXaVFRb3d5kr7JHumjA9Dn-mXSplotDnlez7JMkADczGYsfkRJb9XVVRPL1hIar42JdkLxcIpqTE4ig9PM4i2FWyH9tavPjZ6CCbJB_wdU9wJ12vbauZbVApuOAABUpLjycFrwLSNJjeU3h-o6UoPZXcYeJeyO2hRaghvfxM4hCbP57V3LBxmOClnyrb9X_Gd-9V5qNl1-gZ77tjygJOSEumSW1CUruekdO1Nath6vcd2ugknEqr44Ntobe0gWPQmP9Q2Rg8ON4ppdPiGrA6hvZhm6ek4dimlia6rc); background-size: cover; background-position: center;">
+            <div class="hero__content">
+                <h1 class="animate-on-load">Искусство в деталях</h1>
+                <p class="animate-on-load delay-1">Превращаем автомобили в произведения искусства с 2020 года.</p>
+                <a href="{% url 'calculator' %}" class="btn btn-primary animate-on-load delay-2">Записаться на консультацию</a>
+            </div>
+        </section>
+
+        <section id="about" class="philosophy">
+            <div class="container two-columns">
+                <div class="philosophy__image-wrapper animate-on-scroll">
+                    <img src="https://avatars.mds.yandex.net/get-ydo/5575550/2a00000188c342db2357908dc4ffef75d68b/diploma" alt="Мастер детейлинга за работой">
+                </div>
+                <div class="philosophy__text animate-on-scroll">
+                    <h2>Автомобиль как холст</h2>
+                    <h3>Ручная работа как кисть мастера.</h3>
+                    <p>Для нас каждый автомобиль — уникальный проект. Мы не следуем шаблонам, а создаем эксклюзивные программы под конкретные задачи и историю машины, чтобы достичь безупречного результата.</p>
+                    <a href="{% url 'about' %}" class="btn btn-secondary">Узнать больше о нас</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="cta">
+              <div class="container text-center animate-on-scroll">
+                  <h2>Ваш автомобиль достоин совершенства</h2>
+                  <p>Погрузитесь в мир индивидуального детейлинга. Запишитесь на эксклюзивную консультацию, и мы поможем раскрыть истинный потенциал вашего автомобиля.</p>
+                  <a href="{% url 'about' %}" class="btn btn-primary">Записаться на консультацию</a>
+              </div>
+        </section>
+
+        <section id="gallery" class="gallery">
+            <div class="container">
+                <h2 class="text-center animate-on-scroll">Галерея произведений</h2>
+
+                <div class="swiper main-gallery-slider animate-on-scroll">
+                    <div class="swiper-wrapper">
+                        {% for item in images %}
+                            <div class="swiper-slide">
+                            <a href="{{ item.image.url }}" data-fancybox="main-gallery" data-caption="{{ item.alt_text }}">
+                                <img src="{{ item.image.url }}" alt="{{ item.alt_text }}">
+                            </a>
+                        </div>
+                        {% endfor %}
+                        <div class="swiper-slide">
+                            <a href="https://avatars.mds.yandex.net/get-autoru-vos/6477862/0e8ba16be8013e36dd3b965a831e95df/1200x900" data-fancybox="main-gallery" data-caption="Porsche 911">
+                                <img src="https://avatars.mds.yandex.net/get-autoru-vos/6477862/0e8ba16be8013e36dd3b965a831e95df/1200x900" alt="Porsche 911">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="https://i.pinimg.com/originals/fb/4b/b1/fb4bb110c4a72540328c09bfa20262b8.jpg" data-fancybox="main-gallery" data-caption="Ferrari">
+                                <img src="https://i.pinimg.com/originals/fb/4b/b1/fb4bb110c4a72540328c09bfa20262b8.jpg" alt="Ferrari">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="https://a.d-cd.net/f83cxC3tqzybfE5aVXzVo8ICO2Q-960.jpg" data-fancybox="main-gallery" data-caption="Lamborghini Huracan">
+                                <img src="https://a.d-cd.net/f83cxC3tqzybfE5aVXzVo8ICO2Q-960.jpg" alt="Lamborghini Huracan">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="https://avatars.mds.yandex.net/get-autoru-vos/5263001/4970b4f82de3da9ec06b1f624df98863/1200x900" data-fancybox="main-gallery" data-caption="Mercedes-Benz AMG">
+                                <img src="https://avatars.mds.yandex.net/get-autoru-vos/5263001/4970b4f82de3da9ec06b1f624df98863/1200x900" alt="Mercedes-Benz AMG">
+                            </a>
+                        </div>
+                         <div class="swiper-slide">
+                            <a href="https://avatars.mds.yandex.net/i?id=8e7a0c087d5771acfc8ff7e914be1446_l-5286004-images-thumbs&n=13" data-fancybox="main-gallery" data-caption="Porsche 911 GT3">
+                                <img src="https://avatars.mds.yandex.net/i?id=8e7a0c087d5771acfc8ff7e914be1446_l-5286004-images-thumbs&n=13" alt="Porsche 911 GT3">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+
+                <div class="text-center animate-on-scroll" style="margin-top: 60px;"><a href="{% url 'gallery' %}" class="btn btn-secondary">Смотреть все проекты</a></div>
+            </div>
+        </section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/main-page-slider.js' %}"></script>
+{% endblock %}

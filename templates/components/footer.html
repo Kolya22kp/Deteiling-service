@@ -1,0 +1,9 @@
+{% block footer %}
+<div class="container">
+    <div class="footer__grid">
+        <div class="footer__col"><a href="{% url 'index' %}" class="logo">{{ site_settings.site_name.upper }}</a><p>Ателье для автомобилей, где машина становится произведением искусства.</p></div>
+        <div class="footer__col"><h4>Контакты</h4><p>{{ site_settings.salon_address }}<br><a href="tel:{{ site_settings.salon_phone }}">{{ site_settings.salon_phone }}</a><br><a href="mailto:{{ site_settings.salon_email }}">{{ site_settings.salon_email }}</a></p></div>
+        <div class="footer__col"><h4>Навигация</h4><ul><li><a href="{% url 'services' %}">Услуги</a></li><li><a href="{% url 'gallery' %}">Галерея</a></li><li><a href="{% url 'privacy_policy' %}">Политика конфиденциальности</a></li></ul></div>
+    </div>
+ </div>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://unpkg.com/img-comparison-slider@8/dist/style.css" />
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+            <div class="container text-center">
+                <h1 class="animate-on-load">Галерея наших работ</h1>
+                <p class="animate-on-load delay-1">Каждый проект — это наша гордость и отражение вашего доверия.</p>
+            </div>
+        </section>
+
+        <section class="page-content">
+            <div class="container">
+                <div class="gallery-filters animate-on-scroll">
+                    <div class="form-group">
+                        <label for="make-filter">Марка</label>
+                        <select id="make-filter" class="custom-select">
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="model-filter">Модель</label>
+                        <select id="model-filter" class="custom-select" disabled>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="work-filter">Тип работ</label>
+                        <select id="work-filter" class="custom-select">
+
+                        </select>
+                    </div>
+                    <div class="form-group-toggle">
+                        <label>
+                            <input type="checkbox" id="before-after-toggle">
+                            <span>Только "До/После"</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="gallery-list-container" class="gallery-list-container">
+
+                    <div class="gallery-list-item animate-on-scroll" data-make="porsche" data-model="911" data-work="exterior" data-before-after="true">
+                        <div class="gallery-list-item__image">
+                            <img-comparison-slider>
+                                <img slot="first" src="https://i.ytimg.com/vi/McFFeyB5eqI/maxresdefault.jpg" alt="Porsche 911 до полировки"/>
+                                <img slot="second" src="https://avatars.mds.yandex.net/get-autoru-vos/6477862/0e8ba16be8013e36dd3b965a831e95df/1200x900" alt="Porsche 911 после полировки"/>
+                            </img-comparison-slider>
+                        </div>
+                        <div class="gallery-list-item__text">
+                            <h3>Porsche 911</h3>
+                            <p class="work-type">Внешний детейлинг</p>
+                            <p>Комплексная полировка кузова и нанесение защитного керамического покрытия.</p>
+                        </div>
+                    </div>
+
+                    {% for work in works %}
+                        {% if img.before_after %}
+                            <div class="gallery-list-item animate-on-scroll" data-make="{{ work.vehicle_make.lower }}" data-model="{{ work.vehicle_model.lower }}" data-work="{{ work.work_type.lower }}" data-before-after="true">
+                                <div class="gallery-list-item__image">
+                                    <img-comparison-slider>
+                                        <img slot="first" src="{{ work.work_image.url }}" alt="{{ work.alt_text }}"/>
+                                        <img slot="second" src="{{ work.work_image_two.url }}" alt="{{ work.alt_text_two }}"/>
+                                    </img-comparison-slider>
+                                </div>
+                                <div class="gallery-list-item__text">
+                                    <h3>{{ work.work_title }}</h3>
+                                    <p class="work-type">{% if work.work_type == "exterior" %}Внешний детейлинг{% elif work.work_type == "interior" %}Детейлинг салона {% else %}Индивидуальное решение{% endif %}</p>
+                                    <p>{{ work.work_description }}</p>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="gallery-list-item animate-on-scroll" data-make="{{ work.vehicle_make.lower }}" data-model="{{ work.vehicle_model.lower }}" data-work="{{ work.work_type.lower }}">
+                                 <div class="gallery-list-item__image">
+                                    <a href="{{ work.work_image.url }}" data-fancybox="gallery" data-caption="{{ work.alt_text }}">
+                                        <img src="{{ work.work_image.url }}" alt="{{ work.alt_text }}">
+                                    </a>
+                                </div>
+                                <div class="gallery-list-item__text">
+                                    <h3>{{ work.work_title }}</h3>
+                                    <p class="work-type">{% if work.work_type == "exterior" %}Внешний детейлинг{% elif work.work_type == "interior" %}Детейлинг салона {% else %}Индивидуальное решение{% endif %}</p>
+                                    <p>{{ work.work_description }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+
+                    <div class="gallery-list-item animate-on-scroll" data-make="mercedes" data-model="e-class" data-work="interior">
+                         <div class="gallery-list-item__image">
+                            <a href="https://i.insider.com/5706b607dd089560128b4809" data-fancybox="gallery" data-caption="Салон Mercedes-Benz после химчистки">
+                                <img src="https://i.insider.com/5706b607dd089560128b4809" alt="Детейлинг салона">
+                            </a>
+                        </div>
+                        <div class="gallery-list-item__text">
+                            <h3>Салон Mercedes-Benz</h3>
+                            <p class="work-type">Внутренний уход</p>
+                            <p>Деликатная химчистка кожаного салона с последующим нанесением защитного кондиционера.</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-list-item animate-on-scroll" data-make="lamborghini" data-work="exterior">
+                         <div class="gallery-list-item__image">
+                            <a href="https://a.d-cd.net/f83cxC3tqzybfE5aVXzVo8ICO2Q-960.jpg" data-fancybox="gallery" data-caption="Lamborghini Huracan в керамике">
+                                <img src="https://a.d-cd.net/f83cxC3tqzybfE5aVXzVo8ICO2Q-960.jpg" alt="Lamborghini Huracan">
+                            </a>
+                        </div>
+                        <div class="gallery-list-item__text">
+                            <h3>Lamborghini Huracan</h3>
+                            <p class="work-type">Внешний детейлинг</p>
+                            <p>Оклейка автомобиля матовой антигравийной пленкой для защиты и придания уникального стиля.</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-list-item animate-on-scroll" data-make="mercedes" data-model="g-class" data-work="exterior">
+                        <div class="gallery-list-item__image">
+                            <a href="https://avatars.mds.yandex.net/get-autoru-vos/5263001/4970b4f82de3da9ec06b1f624df98863/1200x900" data-fancybox="gallery" data-caption="Mercedes-Benz AMG G-class">
+                                <img src="https://avatars.mds.yandex.net/get-autoru-vos/5263001/4970b4f82de3da9ec06b1f624df98863/1200x900" alt="Mercedes-Benz AMG">
+                            </a>
+                        </div>
+                        <div class="gallery-list-item__text">
+                            <h3>Mercedes-Benz G-Class</h3>
+                            <p class="work-type">Внешний детейлинг</p>
+                            <p>Полная детейлинг-мойка, очистка дисков и уход за пластиковыми элементами экстерьера.</p>
+                        </div>
+                    </div>
+
+                </div>
+                 </div>
+        </section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/img-comparison-slider@8/dist/index.js" defer></script>
+<script src="{% static 'js/gallery.js' %}"></script>
+<script src="{% static 'js/gallery-filters.js' %}"></script>
+<script>
+    const carData = {{ car_data_json|safe }}
+    const MAKES = {{ makes_json|safe }};
+    const MODELS_BY_MAKE = {{ models_by_make_json|safe }};
+    const WORK_TYPES = {{ work_types_json|safe }};
+</script>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% block header %}
+<div class="container">
+    <a href="{% url 'index' %}" class="logo">{{ site_settings.site_name.upper }}</a>
+    <nav class="nav">
+        <ul>
+            <li><a href="{% url 'calculator' %}">Калькулятор</a></li>
+            <li><a href="{% url 'services' %}">Услуги</a></li>
+            <li><a href="{% url 'gallery' %}">Галерея</a></li>
+            <li><a href="{% url 'about' %}">О нас</a></li>
+            <li><a href="{% url 'blog' %}">Блог</a></li>
+        </ul>
+    </nav>
+    <button class="burger-menu" aria-label="Открыть меню">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</div>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="page-header">
+            <div class="container text-center">
+                <h1 class="animate-on-load">О Нашем Ателье</h1>
+                <p class="animate-on-load delay-1">Страсть к деталям, воплощенная в искусстве.</p>
+            </div>
+        </section>
+
+        <section class="service-description">
+            <div class="container two-columns">
+                <div class="service-description__image animate-on-scroll">
+                    <img src="https://rosretail.com/storage/uploads/blocks/627/image/3.jpeg" alt="Интерьер ателье {{ site_settings.site_name.upper }}">
+                </div>
+                <div class="service-description__text animate-on-scroll">
+                    <h3>Философия процесса</h3>
+                    <p>Для нас автомобиль — это холст, а ручная работа — кисть мастера. Мы отказались от потокового подхода в пользу полного погружения в каждый проект. Наш акцент — на процессе, а не на персонах.</p>
+                    <p>Все работы проводятся в специально оборудованном боксе, где поддерживается идеальный микроклимат: стабильная температура, влажность и полное отсутствие пыли. Это позволяет достигать эталонного качества на каждом этапе, от очистки до нанесения защитных покрытий.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mobile-service">
+            <div class="container text-center animate-on-scroll">
+                <h2>Выездной сервис</h2>
+                <p>Мы ценим ваше время. По предварительному согласованию, некоторые виды работ могут быть выполнены на вашей территории, если условия соответствуют нашим техническим требованиям.</p>
+            </div>
+        </section>
+
+        <section id="booking" class="page-content">
+            <div class="container">
+                <div class="text-center">
+                    <h2>Онлайн-запись на обратный звонок</h2>
+                    <p>Отправьте нам свои данные, и мы вам перезвоним в ближайшее возможное время!</p>
+                </div>
+
+                <form id="callback-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Ваше имя *</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Телефон *</label>
+                        <input type="tel" name="phone" required>
+                    </div>
+                        <div class="form-group">
+                            {{ callback_form.captcha.label_tag }}
+                            {{ callback_form.captcha }}
+                            {% if callback_form.captcha.errors %}
+                                <div class="error">{{ callback_form.captcha.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                    <button type="submit" class="btn btn-primary">Перезвоните мне</button>
+                </form>
+                </div>
+        </section>
+
+        <section class="location-contacts">
+             <div class="container about-grid">
+                <div class="contact-info animate-on-scroll">
+                    <h3>Контакты и адрес</h3>
+                    <div class="contact-methods">
+                        <p><strong>Телефон:</strong> <a href="tel:{{ site_settings.salon_phone }}">{{ site_settings.salon_phone }}</a></p>
+                        <p><strong>Мессенджеры:</strong> <a href="https://wa.me/{{ site_settings.salon_phone }}">WhatsApp</a> <a href="https://t.me/{{ site_settings.salon_tgk }}">Telegram</a></p>
+                        <p><strong>Адрес:</strong> {{ site_settings.salon_address }}</p>
+                    </div>
+                </div>
+                <div class="map-container animate-on-scroll">
+                    <iframe src="{{ site_settings.ymap_widget }}" frameborder="0"></iframe>
+                </div>
+            </div>
+        </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('callback-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target); // ← включает все поля + CSRF + капчу
+
+    try {
+        const response = await fetch("{% url 'submit_callback' %}", {
+            method: 'POST',
+            body: formData,
+        });
+        const result = await response.json();
+        if (result.success) {
+            alert('✅ Спасибо! Мы перезвоним вам в ближайшее время.);
+            e.target.reset();
+        } else {
+            alert('❌ Ошибка: ' + JSON.stringify(result.errors));
+        }
+    } catch (err) {
+        alert('⚠️ Не удалось отправить заявку. Проверьте интернет-соединение.');
+    }
+});
+</script>
+{% endblock %}

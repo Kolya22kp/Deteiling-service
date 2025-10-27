@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<section class="page-header">
+            <div class="container text-center">
+                <h1 class="animate-on-load">Политика конфиденциальности</h1>
+                <p class="animate-on-load delay-1">Ваши данные в безопасности.</p>
+            </div>
+        </section>
+
+        <section class="page-content">
+            <div class="container content-wrapper" id="policy">
+                <!-- Загружается из JS, ничего не добавлять -->
+            </div>
+
+        </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const lines = JSON.parse('{{ policy_lines_json|safe }}');
+
+    const container = document.getElementById('policy');
+
+    el = document.createElement('p');
+    el.textContent = "Обновлено: " + '{{ updated_at }}'
+    container.appendChild(el)
+
+    lines.forEach(line => {
+        let el;
+        if (line.type === 'title') {
+              el = document.createElement('h3');
+              el.textContent = line.text;
+        } else if (line.type === 'paragraph') {
+              el = document.createElement('p');
+              el.textContent = line.text;
+        } else if (line.type === 'empty') {
+             el = document.createElement('br');
+        }
+        if (el) {
+          container.appendChild(el);
+        }
+    });
+
+
+</script>
+{% endblock %}
