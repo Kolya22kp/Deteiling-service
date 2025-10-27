@@ -53,14 +53,14 @@ def submit_callback(request):
 
     callback = CallbackRequest.objects.create(name=name, phone=phone)
 
-    email_subject = "📞 Новая заявка на обратный звонок"
-    email_message = (
-        f"Имя: {callback.name}\n"
-        f"Телефон: {callback.phone}\n"
-        f"Дата: {callback.created_at.strftime('%d.%m.%Y %H:%M')}"
-    )
+    # email_subject = "📞 Новая заявка на обратный звонок"
+    # email_message = (
+    #     f"Имя: {callback.name}\n"
+    #     f"Телефон: {callback.phone}\n"
+    #     f"Дата: {callback.created_at.strftime('%d.%m.%Y %H:%M')}"
+    # )
     telegram_text = format_callback_for_telegram(callback)
     send_telegram_notification(telegram_text)
-    send_email_notification(email_subject, email_message)
+    # send_email_notification(email_subject, email_message)
 
     return JsonResponse({'success': True})

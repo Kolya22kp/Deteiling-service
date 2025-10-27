@@ -21,7 +21,7 @@ class PrivacypolicyAdmin(admin.ModelAdmin):
 
 @admin.register(Settings)
 class SettingsAdmin(admin.ModelAdmin):
-    fields = ('site_name', 'salon_address', 'salon_phone', 'salon_email', 'telegram_bot_token', 'telegram_chat_id')
+    fields = ('site_name', 'salon_address', 'salon_phone', 'salon_email', 'salon_tgk', 'ymap_widget')
 
     def has_add_permission(self, request):
         return not Settings.objects.exists()

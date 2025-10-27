@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'calculator',
     'services',
     'captcha',
-    'educational'
+    'educational',
+    'django.contrib.sitemaps'
 ]
 
 MIDDLEWARE = [
@@ -75,6 +76,14 @@ TEMPLATES = [
         },
     },
 ]
+
+CAPTCHA_IMAGE_SIZE = (200, 80)
+
+CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
+CAPTCHA_LENGTH = 4
+
+CAPTCHA_FOREGROUND_COLOR = '#000000'
+CAPTCHA_BACKGROUND_COLOR = '#FFFFFF'
 
 WSGI_APPLICATION = 'deteiling.wsgi.application'
 
