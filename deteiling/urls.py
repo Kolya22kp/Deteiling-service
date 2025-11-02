@@ -17,8 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 from deteiling import settings
+
+from django.contrib.sitemaps.views import sitemap
+from .sitemap import StaticViewSitemap, ArticleSitemap
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'articles': ArticleSitemap,
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +36,8 @@ urlpatterns = [
     path('captcha/', include("captcha.urls")),
     path('', include("calculator.urls")),
     path('', include("educational.urls")),
+    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 if settings.DEBUG:
